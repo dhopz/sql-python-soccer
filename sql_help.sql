@@ -209,3 +209,19 @@ SELECT
 FROM home
 INNER JOIN away
 ON home.id = away.id;
+
+-- Window FUNCTIONS
+--Select the league name and average total goals scored from league and match.
+--Complete the window function so it calculates the rank of average goals scored across all leagues in the database.
+--Order the rank by the average total of home and away goals scored.
+SELECT 
+	-- Select the id, country name, season, home, and away goals
+	m.id, 
+    c.name AS country, 
+    m.season,
+	m.home_goal,
+	m.away_goal,
+    -- Use a window to include the aggregate average in each row
+	AVG(m.home_goal + m.away_goal) OVER() AS overall_avg
+FROM match AS m
+LEFT JOIN country AS c ON m.country_id = c.id;
